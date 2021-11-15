@@ -186,31 +186,4 @@ public class LinkedList implements List {
         }
         return current;
     }
-
-
-
-
-    public static void main(String[] args) {
-        LinkedList lin = new LinkedList();
-
-        lin.add("Maryna");
-        lin.add("Ded1");
-        lin.add("Ded2");
-        lin.add("Babka1",0);
-        lin.add("Babka2",0);
-       // System.out.println(lin.toString());
-        lin.add("Vasya",3);
-
-//        lin.add("A",0);
-//        lin.add("B",1);
-        System.out.println(lin.toString());
-//        System.out.println(lin.dispayBackwardd());
-//        System.out.println(lin.get(1));
-//        lin.remove(0);
-//        lin.set("M",0);
-//        System.out.println(lin.toString());
-//        System.out.println(lin.size());
-        System.out.println(lin.lastIndexOf("Ded2"));
-//        System.out.println("get1: "+lin.get1(0));
-    }
 }
