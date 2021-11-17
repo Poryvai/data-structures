@@ -2,6 +2,7 @@ package com.luxsoft.datastructure.list;
 
 import com.sun.source.tree.WhileLoopTree;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -185,5 +186,62 @@ public class LinkedList implements List {
             }
         }
         return current;
+    }
+
+    public ListIterator iterator(){
+        return new ListIterator();
+    }
+
+    private class ListIterator implements Iterator {
+        private Node current;
+        private Node lastAccessed;
+        private int index = 0;
+
+        public ListIterator() {
+            current = head.next;
+            lastAccessed = null;
+            index = 0;
+        }
+
+
+        @Override
+        public boolean hasNext() {
+            //return current!= null;
+            return index < size;
+        }
+
+        //        @Override
+//        public Object next() {
+//            if (!hasNext()) {
+//                throw new NoSuchElementException();
+//            }
+//            lastAccessed = current;
+//            Object value = current.value;
+//            current = current.next;
+//            index++;
+//            return value;
+//        }
+//
+        @Override
+        public void remove() {
+            Node prev = lastAccessed.prev;
+            Node next = lastAccessed.next;
+            prev.next = next;
+            next.prev = prev;
+            index--;
+            size--;
+            lastAccessed = null;
+        }
+
+
+
+        @Override
+        public Object next() {
+            Node currentNode = getNode(index);
+            Object value = currentNode.value;
+            index++;
+            return value;
+        }
+
     }
 }

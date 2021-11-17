@@ -3,6 +3,8 @@ package com.luxsoft.datastructure.list;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -307,6 +309,26 @@ public class LinkedListTest {
 
         Assertions.assertThrows(NullPointerException.class, () ->
                 linkedList.lastIndexOf(null));
+    }
+
+    @Test
+    public void testIterator() {
+        LinkedList list  = new LinkedList();
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        Iterator iterator = list.iterator();
+        assertTrue(iterator.hasNext());
+        assertEquals("A", iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals("B", iterator.next());
+    }
+
+    @Test
+    public void testIteratorReturnFalseOnEmptyList() {
+        LinkedList list  = new LinkedList();
+        Iterator iterator = list.iterator();
+        assertFalse(iterator.hasNext());
     }
 
 }
