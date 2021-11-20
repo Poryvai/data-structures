@@ -13,7 +13,7 @@ public class LinkedListTest {
 
     @Test
     void testAddAndSize() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("A");;
@@ -25,18 +25,21 @@ public class LinkedListTest {
 
     @Test
     void testAddToDefinitePositionAndSize() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
+
         linkedList.add("A");
         linkedList.add("A",0);;
 
         assertEquals(2,linkedList.size());
+
         linkedList.add("B",1);
+
         assertEquals(3,linkedList.size());
     }
 
     @Test
     public void testAddToListNull() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         Assertions.assertThrows(NullPointerException.class, () ->
                 linkedList.add(null));
@@ -44,7 +47,7 @@ public class LinkedListTest {
 
     @Test
     public void testAddAndGetItems() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -57,7 +60,7 @@ public class LinkedListTest {
 
     @Test
     public void testSetAndGetItems() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -71,7 +74,7 @@ public class LinkedListTest {
 
     @Test
     public void testSetNullItem() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
 
@@ -83,7 +86,7 @@ public class LinkedListTest {
 
     @Test
     public void testGetFromEmptyList() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         Assertions.assertThrows(IndexOutOfBoundsException.class, () ->
                 linkedList.get(0));
@@ -91,7 +94,7 @@ public class LinkedListTest {
 
     @Test
     void testSize() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         assertEquals(0,linkedList.size());
 
@@ -107,14 +110,14 @@ public class LinkedListTest {
 
     @Test
     void testIsEmptyTrueOnNewList() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         assertTrue(linkedList.isEmpty());
     }
 
     @Test
     void testIsEmptyFalseOnNewListWithData() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
 
@@ -124,7 +127,7 @@ public class LinkedListTest {
 
     @Test
     void testIsEmptyTrueOnNewListAfterClear() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -141,7 +144,7 @@ public class LinkedListTest {
 
     @Test
     void testContainsTrueOnNewListWithSameData() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("SUPERMAN");
         linkedList.add("IRONMAN");
@@ -155,7 +158,7 @@ public class LinkedListTest {
 
     @Test
     void testContainsFalseOnNewListAWithSearchDataNotExsist() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("SUPERMAN");
         linkedList.add("IRONMAN");
@@ -169,7 +172,7 @@ public class LinkedListTest {
 
     @Test
     void testContainsFalseIsEmptyList() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         assertEquals(0, linkedList.size());
         assertFalse(linkedList.contains("SUPER WOMAN"));
@@ -177,7 +180,7 @@ public class LinkedListTest {
 
     @Test
     void testClearTrueList() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -193,7 +196,7 @@ public class LinkedListTest {
 
     @Test
     void testClearTrueWithEmptyList() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         assertEquals(0, linkedList.size());
        linkedList.clear();
@@ -203,7 +206,7 @@ public class LinkedListTest {
 
     @Test
     public void testRemove() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -220,7 +223,7 @@ public class LinkedListTest {
 
     @Test
     public void testRemoveFirstItem() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -237,7 +240,7 @@ public class LinkedListTest {
 
     @Test
     public void testRemoveLastItem() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -254,7 +257,7 @@ public class LinkedListTest {
 
     @Test
     public void testIndexOf() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -272,7 +275,7 @@ public class LinkedListTest {
 
     @Test
     public void testIndexOfValueIsNull() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         Assertions.assertThrows(NullPointerException.class, () ->
                 linkedList.indexOf(null));
@@ -280,14 +283,14 @@ public class LinkedListTest {
 
     @Test
     public void testIndexOfListIsEmpty() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         assertEquals(-1, linkedList.indexOf("Search"));
     }
 
     @Test
     public void testLastIndexOf() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -305,7 +308,7 @@ public class LinkedListTest {
 
     @Test
     public void testLastIndexOfValueIsNull() {
-        LinkedList linkedList  = new LinkedList();
+        LinkedList<String> linkedList  = new LinkedList();
 
         Assertions.assertThrows(NullPointerException.class, () ->
                 linkedList.lastIndexOf(null));
@@ -313,11 +316,13 @@ public class LinkedListTest {
 
     @Test
     public void testIterator() {
-        LinkedList list  = new LinkedList();
-        list.add("A");
-        list.add("B");
-        list.add("C");
-        Iterator iterator = list.iterator();
+        LinkedList<String> linkedList  = new LinkedList();
+
+        linkedList.add("A");
+        linkedList.add("B");
+        linkedList.add("C");
+
+        Iterator iterator = linkedList.iterator();
         assertTrue(iterator.hasNext());
         assertEquals("A", iterator.next());
         assertTrue(iterator.hasNext());
@@ -326,9 +331,35 @@ public class LinkedListTest {
 
     @Test
     public void testIteratorReturnFalseOnEmptyList() {
-        LinkedList list  = new LinkedList();
-        Iterator iterator = list.iterator();
+        LinkedList<String> linkedList  = new LinkedList();
+        Iterator iterator = linkedList.iterator();
+
         assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void testIteratorRemoveItem() {
+        LinkedList<String> linkedList  = new LinkedList();
+
+        linkedList.add("A");
+        linkedList.add("B");
+        linkedList.add("C");
+        linkedList.add("D");
+
+        Iterator iterator = linkedList.iterator();
+
+        assertTrue(iterator.hasNext());
+        assertEquals("A", iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals("B", iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals("C", iterator.next());
+        iterator.remove();
+        assertTrue(iterator.hasNext());
+        assertEquals("D", iterator.next());
+
+       // assertEquals(3, linkedList.size());
+
     }
 
 }

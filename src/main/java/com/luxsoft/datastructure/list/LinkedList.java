@@ -3,17 +3,18 @@ package com.luxsoft.datastructure.list;
 import com.sun.source.tree.WhileLoopTree;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class LinkedList implements List {
+public class LinkedList<T> implements List<T> {
 
-    Node head;
-    Node tail;
+    Node<T> head;
+    Node<T> tail;
     int size;
 
     @Override
-    public void add(Object value) {
+    public void add(T value) {
         if(value==null){
             throw new NullPointerException("You cannot add null element");
         }
@@ -21,14 +22,14 @@ public class LinkedList implements List {
     }
 
     @Override
-    public void add(Object value, int index) {
+    public void add(T value, int index) {
         if(value==null){
             throw new NullPointerException("You cannot add null element");
         }
         if (index >= size) {
             throw new IndexOutOfBoundsException("List index is out of bounds!");
         }
-        Node newNode = new Node(value);
+        Node<T> newNode = new Node<>(value);
         if (size == 0) {
             head = tail = newNode;
         } else if (index == size-1) { // доюавляем в конец
@@ -40,7 +41,7 @@ public class LinkedList implements List {
             newNode.next = head;//устанавливаем связь
             head = newNode;
         }else{
-            Node currentNode = getNode(index-1);
+            Node<T> currentNode = getNode(index-1);
             currentNode.prev.next = newNode;
             newNode.prev = currentNode.prev;
             newNode.next = currentNode;
@@ -50,14 +51,14 @@ public class LinkedList implements List {
     }
 
     @Override
-    public Object remove(int index) {
+    public T remove(int index) {
         if (isEmpty()) {
             throw new IllegalStateException("List is empty!");
         }
         if (index >= size) {
             throw new IndexOutOfBoundsException("List index is out of bounds!");
         }
-        Node current = head;
+        Node<T> current = head;
         int count = 0;
         while (count != index) {
             current = current.next;
@@ -78,27 +79,27 @@ public class LinkedList implements List {
             current.next.prev = current.prev;
         }
         size--;
-        return current;
-    }
-
-    @Override
-    public Object get(int index) {
-        if (index >= size) {
-            throw new IndexOutOfBoundsException("List index is out of bounds!");
-        }
-        Node current = getNode(index);
         return current.value;
     }
 
     @Override
-    public Object set(Object value, int index) {
+    public T get(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException("List index is out of bounds!");
+        }
+        Node<T> current = getNode(index);
+        return current.value;
+    }
+
+    @Override
+    public T set(T value, int index) {
         if(value==null){
             throw new NullPointerException("You cannot add null element");
         }
         if (index >= size) {
             throw new IndexOutOfBoundsException("List index is out of bounds!");
         }
-        Node current = head;
+        Node<T> current = head;
         int count = 0;
         while (count != index) {
             current = current.next;
@@ -109,7 +110,7 @@ public class LinkedList implements List {
         }
         current.value = value;
      //getNode(index).value  = value;
-        return current;
+        return current.value;
     }
 
     @Override
@@ -131,12 +132,12 @@ public class LinkedList implements List {
     }
 
     @Override
-    public boolean contains(Object value) {
+    public boolean contains(T value) {
         return indexOf(value) != -1;
     }
 
     @Override
-    public int indexOf(Object value) {
+    public int indexOf(T value) {
         if(value == null) {
             throw new NullPointerException("Null values are not support");
         }
@@ -149,7 +150,7 @@ public class LinkedList implements List {
     }
 
     @Override
-    public int lastIndexOf(Object value) {
+    public int lastIndexOf(T value) {
         if(value == null) {
             throw new NullPointerException("Null values are not support");
         }
@@ -163,7 +164,7 @@ public class LinkedList implements List {
     @Override
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
-        Node current = head;
+        Node<T> current = head;
         while (current != null) {
             stringJoiner.add(current.value.toString());
             current = current.next;
@@ -172,8 +173,8 @@ public class LinkedList implements List {
         return stringJoiner.toString();
     }
 
-    private Node getNode(int index) {
-        Node current;
+    private Node<T> getNode(int index) {
+        Node<T> current;
         if (size / 2 <= index) {
             current = head;
             for (int i = 0; i < index; i++) {
@@ -192,13 +193,13 @@ public class LinkedList implements List {
         return new ListIterator();
     }
 
-    private class ListIterator implements Iterator {
-        private Node current;
-        private Node lastAccessed;
-        private int index = 0;
+    private class ListIterator implements Iterator<T> {
+        private Node<T> current;
+        private Node<T> lastAccessed;
+        private int index;
 
         public ListIterator() {
-            current = head.next;
+            current = head;
             lastAccessed = null;
             index = 0;
         }
@@ -206,42 +207,31 @@ public class LinkedList implements List {
 
         @Override
         public boolean hasNext() {
-            //return current!= null;
-            return index < size;
+            return current!= null;
+           // return index < size;
         }
 
-        //        @Override
-//        public Object next() {
-//            if (!hasNext()) {
-//                throw new NoSuchElementException();
-//            }
-//            lastAccessed = current;
-//            Object value = current.value;
-//            current = current.next;
-//            index++;
-//            return value;
-//        }
-//
+                @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            lastAccessed = current;
+            T value = current.value;
+            current = current.next;
+            index++;
+            return value;
+        }
+
         @Override
         public void remove() {
-            Node prev = lastAccessed.prev;
-            Node next = lastAccessed.next;
+            Node<T> prev = lastAccessed.prev;
+            Node<T> next = lastAccessed.next;
             prev.next = next;
             next.prev = prev;
             index--;
             size--;
             lastAccessed = null;
         }
-
-
-
-        @Override
-        public Object next() {
-            Node currentNode = getNode(index);
-            Object value = currentNode.value;
-            index++;
-            return value;
-        }
-
     }
 }
