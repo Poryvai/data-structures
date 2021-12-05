@@ -16,87 +16,67 @@ java FileAnalyzer C:/test/story.txt duck
 
 
 import java.io.*;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileAnalyzer {
     public static void main(String[] args) throws IOException {
-        String dirname = "/Users/igor/study/java/excersize/home/data-structures/src/main/java/com/luxsoft/io/file0.txt";
+        String pathToFile = args[0];
+        String word = args[1];
+        String fileContent = readContent(pathToFile).toLowerCase();
 
-        String to ="/Users/igor/study/java/excersize/home/data-structures/src/main/java/com/luxsoft/io/test2/file0.txt";
-        new File(dirname).renameTo(new File(to));
+        int wordOccurrencesInFile = getCountWordRepeats(fileContent, word);
+        List<String> containWordSentences = getSentencesContainingTheSearchWord(fileContent, word);
 
-
-//        File after = new File("/Users/igor/study/java/excersize/home/data-structures/src/main/java/com/luxsoft/io/test2/file0.txt");
-//        boolean success = f.renameTo(after);
-//        if (success) {
-//            f = after;
-//        }
-//        System.out.println(f);
-
-
-
-//        String parentPath = spec.getParent();
-//        File parentFolder = spec.getParentFile();
-//        RandomAccessFile f1 = new RandomAccessFile(f, "rw");
-//        f1.writeChars();
-
-//        boolean exists = f.createNewFile();
-//        if (exists){
-//            System.out.println("create new file");
-//        }else{
-//            System.out.println("work with ");
-//        }
-
-//        boolean isDir = f.isDirectory();
-//        if (isDir == true){
-//            String [] s = f.list();
-//            for (int i =0; i<s.length; i++){
-//                File f1 = new File(dirname + File.separator+s[i]);
-//                if (f1.isDirectory()){
-//                    System.out.println(s[i]+" являеться каталогом");
-//                }else{
-//                    System.out.println(s[i]+" являеться файлом");
-//                }
-//            }
-//
-//        }else{
-//            System.out.println(dirname+" не являеться каталогом");
-//        }
-//        int size;
-//       try( FileInputStream fis = new FileInputStream("FileAnalyzer.java")){
-//           System.out.println("щбщее число доступных байтов" + (size=fis.available()));
-//       }
-/////////////////////////////////////////
-//        String s = "ti kuku otkuda takoy \n to come to the \n of country";
-//        byte [] barr = s.getBytes();
-//        FileOutputStream f0 = null;
-//        FileOutputStream f1 = null;
-//        try {
-//            f0 = new FileOutputStream("/Users/igor/study/java/excersize/home/data-structures/src/main/java/com/luxsoft/io/file0.txt");
-//            f1 = new FileOutputStream("/Users/igor/study/java/excersize/home/data-structures/src/main/java/com/luxsoft/io/file1.txt");
-//
-//            for (int i = 0; i < barr.length; i += 2) {
-//                System.out.println((char)barr[i]);
-//                f0.write(barr[i]);
-//            }
-//            f1.write(barr);
-//        }catch (IOException e){
-//            System.out.println("f0"+f0.toString());
-//        }finally {
-//            try{
-//                if(f0!=null){
-//                    f0.close();
-//                }
-//            }catch (IOException e){}
-//
-//            try{
-//                if(f1!=null){
-//                    f1.close();
-//                }
-//            }catch (IOException e){}
-//        }
-//        System.out.println("f0"+f0.toString());
-//        System.out.println("(c)");
- /////////////////////////////////////////////////////////
+        printCountWordRepeats(wordOccurrencesInFile, word);
+        printSentencesContainingTheSearchWord(containWordSentences, word);
     }
+
+    public static String readContent(String pathToFile) throws IOException {
+        File file = new File(pathToFile);
+        if (!file.isFile()) {
+            throw new FileNotFoundException("File not found: " + pathToFile);
+        }
+        FileInputStream textFile = new FileInputStream(file);
+        byte[] fileContent = textFile.readAllBytes();
+        textFile.close();
+
+        return new String(fileContent);
+    }
+
+    public static int getCountWordRepeats(String fileContent, String word) {
+        Pattern pattern = Pattern.compile("\s*" + word.toLowerCase() + "\s*[,.?!]*");
+        Matcher matcher = pattern.matcher(fileContent.toLowerCase());
+
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
+    }
+
+    public static List<String> getSentencesContainingTheSearchWord(String fileContent, String word) {
+        Pattern pattern = Pattern.compile("\\s*[^.!?]*" + word.toLowerCase() + "\\s*[^.!?]*[.!?]");
+        Matcher matcher = pattern.matcher(fileContent.toLowerCase());
+
+        List<String> sentences = new ArrayList<>();
+        while (matcher.find()) {
+            sentences.add(matcher.group().trim());
+        }
+        return sentences;
+    }
+
+    private static void printCountWordRepeats(int count, String word) {
+        System.out.println("Found " + count + " repeats of the word " + word.toUpperCase() + " in the text");
+    }
+
+    private static void printSentencesContainingTheSearchWord(List<String> sentences, String word) {
+        for (String sentence : sentences) {
+            System.out.println(sentence.replaceAll(word, word.toUpperCase()));
+        }
+    }
+
 }
+
